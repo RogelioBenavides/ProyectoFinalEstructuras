@@ -164,11 +164,11 @@ int main(int argc, char const *argv[])
     } while(known < nPorts);
 
     //Printing the path from the starting point to the ending point
-    cout << "Ruta m s corta:\n";
-    int sig = port1;
-    while(path[sig]!= -1){
-        cout << ports[sig] << "->";
-        sig = path[sig];
+    cout << "\nRuta m s corta:\n";
+    int nextPort = port1;
+    while(path[nextPort]!= -1){
+        cout << ports[nextPort] << "->";
+        nextPort = path[nextPort];
     }
     cout  << ports[port2] << "\nDistancia: " << cost[port1] << " millas na£ticas"<< endl;
     return 0;
