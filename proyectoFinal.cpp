@@ -23,9 +23,13 @@ vector<string> split(string str, char delimiter) {
 
 int main(int argc, char const *argv[])
 {
+    //Asking the name of the file
+    cout << "Ingresa el nombre del archivo: ";
+    string fileName;
+    cin >> fileName;
     //Opening the file
     ifstream file;
-    file.open("red_puertos.txt");
+    file.open(fileName);
     //Declaring the variables
     string input;
     string line;
