@@ -110,6 +110,7 @@ int main(int argc, char const *argv[])
     cout << "Ingrese el puerto 2: ";
     cin >> port2String;
 
+    //Checking if the ports are valid
     for(int i = 0; i < nPorts; i++){
         if(ports[i] == port1String){
             port1 = i;
@@ -120,46 +121,49 @@ int main(int argc, char const *argv[])
     }
     
     //Dijkstra's algorithm
-    //Declaraci¢n de arreglos
+    //Declaration of the variables and arrays for the dijkstra's algorithm
     bool know[nPorts];
     int cost[nPorts];
     int path[nPorts];
-    int verdaderos = 0;
-    int vactual = port2;
-    //Inicializaci¢n de arreglos
+    int known = 0;
+    int actualPort = port2;
+    //Initializing the variables of the arrays for the dijkstra's algorithm
     for (int i = 0; i < nPorts; i++)
     {
         cost[i] = INF;
         path[i] = -1;
         know[i] = false;
     }
+    // Cost on port 2 is equal to 0 because it is the ending point
     cost[port2] = 0;
     
     do{
-        know[vactual] = true;
-        verdaderos++;
+        know[actualPort] = true;
+        known++;
         int menor = INF;
-        int idxMenor = 0;
-        //Ciclo que busca el menor costo
+        int minimumIndex = 0;
+        //Cicle to find the minimum cost
         for (int col = 0; col < nPorts; col++)
         {
-            //Si el costo es menor que el menor costo y el nodo no ha sido visitado
-            if(adjMatrix[vactual][col] != INF && know[col] == false)
+            //If the cost is less than the minimum cost and the node has not been visited
+            if(adjMatrix[actualPort][col] != INF && know[col] == false)
             {
-                if(cost[col] > cost[vactual] + adjMatrix[vactual][col]){
-                    cost[col] = cost[vactual] + adjMatrix[vactual][col];
-                    path[col] = vactual;
+                if(cost[col] > cost[actualPort] + adjMatrix[actualPort][col]){
+                    cost[col] = cost[actualPort] + adjMatrix[actualPort][col];
+                    path[col] = actualPort;
                 }
             }
-            //Si el costo es menor que el menor costo y el nodo ha sido visitado
+            //If the cost is less than the minimum cost and the node has been visited
             if(cost[col] < menor && know[col] == false){
                 menor = cost[col];
-                idxMenor = col;
+                minimumIndex = col;
             }
         }
-        //Se asigna el valor por el que va a empezar el ciclo
-        vactual = idxMenor;
-    } while(verdaderos < nPorts);
+        //The actual port will be the port with the minimum cost
+        actualPort = minimumIndex;
+    } while(known < nPorts);
+
+    //Printing the path from the starting point to the ending point
     cout << "Ruta m s corta:\n";
     int sig = port1;
     while(path[sig]!= -1){
